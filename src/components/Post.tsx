@@ -1,11 +1,28 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { ChangeEvent, FormEvent, InvalidEvent, useState } from "react";
 import { Avatar } from "./Avatar";
 import { Comment } from "./Comment";
 import { format, formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
-export function Post({ author, publishedAt, content }) {
+interface Author{
+  name: string;
+  role: string;
+  avatarUrl: string;
+}
+
+export interface Content{
+  type: 'paragraph' | 'link';
+  content: string;
+}
+
+interface PostProps{
+  author: Author;
+  publishedAt: Date;
+  content: Content[];
+}
+
+export function Post({ author, publishedAt, content }: PostProps) {
 
   const [comments, setComments] = useState(["cumpricadeira"]);
 
@@ -19,23 +36,23 @@ export function Post({ author, publishedAt, content }) {
     addSuffix: true
   })
 
-  function handleSubmit(event) {
+  function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
     setComments([...comments, newComment]);
     setNewComment("");
   }
 
-  function handleNewComment(event) {
+  function handleNewComment(event: ChangeEvent<HTMLTextAreaElement>) {
     event.target.setCustomValidity("");
     setNewComment(event.target.value);
   }
 
-  function handleNewCommentInvalid(event) {
+  function handleNewCommentInvalid(event: InvalidEvent<HTMLTextAreaElement>) {
     event.target.setCustomValidity("Por favor, preencha o campo de comentário.");
   }
 
-  function deleteComment(commentToDelete) {
+  function deleteComment(commentToDelete: string) {
     const commentsWithoutDeletedOne = comments.filter(comment => { return comment !== commentToDelete });
     setComments(commentsWithoutDeletedOne);
   }
@@ -46,7 +63,7 @@ export function Post({ author, publishedAt, content }) {
     <article className="bg-zinc-800 rounded-lg p-10 mb-8">
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Avatar border="true" src={author.avatarUrl} />
+          <Avatar border={true} src={author.avatarUrl} />
           <div className="flex items-center flex-col gap-1">
             <strong className="text-zinc-100 ">{author.name}</strong>
             <span className="text-zinc-400 text-sm">{author.role}</span>

@@ -10,7 +10,7 @@ export function Sidebar() {
       />
 
       <div className="flex flex-col items-center text-white mt-[-1.5rem]">
-        <Avatar border="true" src="https://github.com/Marcos-06.png" />
+        <Avatar border={true} src="https://github.com/Marcos-06.png" />
         <strong className="mt-4 text-zinc-100">Usuario</strong>
         <span className="text-sm text-zinc-400">Web Developer</span>
       </div>
