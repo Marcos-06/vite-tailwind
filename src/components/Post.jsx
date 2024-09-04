@@ -40,7 +40,7 @@ export function Post({ author, publishedAt, content }) {
     setComments(commentsWithoutDeletedOne);
   }
 
-
+  const isNewCommentValid = newComment.length === 0;
 
   return (
     <article className="bg-zinc-800 rounded-lg p-10 mb-8">
@@ -80,7 +80,11 @@ export function Post({ author, publishedAt, content }) {
           onInvalid={handleNewCommentInvalid}
           required
         />
-        <button disabled={newComment.length === 0} className="py-4 px-6 mt-4 rounded-lg bg-green-600 text-white font-bold cursor-pointer hover:bg-green-400" type="submit">
+        <button
+          disabled={isNewCommentValid}
+          className={`py-4 px-6 mt-4 rounded-lg bg-green-600 text-white font-bold 
+            ${isNewCommentValid ? "opacity-[0.7] cursor-not-allowed" : "hover:bg-green-300 cursor-pointer"}`}
+          type="submit">
           Publicar
         </button>
       </form>
@@ -90,7 +94,6 @@ export function Post({ author, publishedAt, content }) {
           return <Comment key={comment} content={comment} onDeleteComment={deleteComment} />
         })}
       </div>
-
     </article>
   )
 }

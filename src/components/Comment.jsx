@@ -1,11 +1,16 @@
 /* eslint-disable react/prop-types */
 import { ThumbsUp, Trash } from "phosphor-react";
 import { Avatar } from "./Avatar";
+import { useState } from "react";
 
 export function Comment(props) {
+  const [likes, setLikes] = useState(0);
 
   function handleDeleteComment() {
     props.onDeleteComment(props.content)
+  }
+  function handleLike() {
+    setLikes((state => state + 1));
   }
 
   return (
@@ -27,10 +32,10 @@ export function Comment(props) {
           <p className="mt-4 text-zinc-300">{props.content}</p>
         </div>
         <footer className="mt-4">
-          <button className="flex text-gray-400 cursor-pointer items-center hover:text-green-300">
+          <button onClick={handleLike} className="flex text-gray-400 cursor-pointer items-center hover:text-green-300">
             <ThumbsUp className="mr-2" />
             Aplaudir
-            <span className="before:p-1 before:content-['\2022']">29</span>
+            <span className="before:p-1 before:content-['\2022']">{likes}</span>
           </button>
         </footer>
 
